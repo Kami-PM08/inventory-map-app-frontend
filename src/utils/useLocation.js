@@ -13,7 +13,6 @@ const getLocation = async () => {
           longitude: coords.longitude,
           latitude: coords.latitude,
         };
-        console.log(currentLocation);
         resolve(currentLocation);
       },
       (error) => {
