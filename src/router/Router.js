@@ -1,14 +1,29 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-// import App from "../App";
+import { useContext } from "react";
+import { Outlet, Route, Routes } from "react-router-dom";
+import { UserContext } from "../context/user/UserProvider";
+import Login from "../pages/Login";
 import MapPage from "../pages/Map";
 
+const Router = () => {
+  const { isAuthenticated } = useContext(UserContext);
 
-const Router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<MapPage />} >
-
-    </Route>
-  )
-);
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <>
+            <Outlet />
+          </>
+        }
+      >
+        <Route index={!isAuthenticated} element={<Login />} />
+        {isAuthenticated && (
+          <Route index={isAuthenticated} element={<MapPage />} />
+        )}
+      </Route>
+    </Routes>
+  );
+};
 
 export default Router;
